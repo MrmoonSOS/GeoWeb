@@ -1,0 +1,292 @@
+/* ═══════════════════════════════════════════════════════
+   GeoWeb — style.css
+   Tema: dark / técnico-geométrico
+   Fuentes: JetBrains Mono (datos) + Syne (títulos)
+═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Variables ── */
+:root {
+  --bg-base:      #0d0f14;
+  --bg-sidebar:   #12151c;
+  --bg-card:      #191d27;
+  --bg-hover:     #1f2433;
+  --border:       #252a38;
+  --border-light: #2e3549;
+
+  --accent:       #4fffb0;       /* verde-menta eléctrico */
+  --accent-dim:   #1a4d38;
+  --accent2:      #7b8cff;       /* índigo suave */
+
+  --text-primary: #e8ecf5;
+  --text-muted:   #5a6380;
+  --text-label:   #8892aa;
+
+  --radius-sm:    6px;
+  --radius-md:    10px;
+  --radius-lg:    14px;
+
+  --font-display: 'Syne', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --sidebar-w:    240px;
+  --transition:   0.18s ease;
+}
+
+/* ── Reset básico ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+/* ── Body ── */
+.geoweb-body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.geoweb-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.geoweb-sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ── Logo ── */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 18px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-icon {
+  font-size: 22px;
+  color: var(--accent);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.logo-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.logo-accent { color: var(--accent); }
+
+/* ── Secciones ── */
+.sidebar-section {
+  padding: 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 14px;
+}
+
+/* ── Toolbar — grid 2x2 ── */
+.toolbar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), transform 0.1s ease;
+  color: var(--text-label);
+}
+
+.tool-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.tool-btn.activo {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tool-btn:active { transform: scale(0.95); }
+
+.tool-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.tool-name {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* ── Grupos de propiedades ── */
+.prop-group {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.prop-group-title {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--accent2);
+  padding: 7px 10px 5px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(123,140,255,0.05);
+}
+
+.prop-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.prop-row:last-child { border-bottom: none; }
+
+.prop-key {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+}
+
+.prop-val {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+
+/* valor actualizado → pequeño flash */
+.prop-val.updated {
+  color: #ffffff;
+}
+
+/* ── Botón limpiar ── */
+.btn-limpiar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.3px;
+}
+
+.btn-limpiar:hover {
+  background: rgba(255, 80, 80, 0.08);
+  border-color: rgba(255, 80, 80, 0.4);
+  color: #ff6b6b;
+}
+
+.btn-limpiar:active { transform: scale(0.97); }
+
+/* ══════════════════════════════════════════
+   TABLERO JSXGRAPH
+══════════════════════════════════════════ */
+.geoweb-main {
+  flex: 1;
+  position: relative;
+  background: var(--bg-base);
+  overflow: hidden;
+}
+
+.geoweb-board {
+  width: 100%;
+  height: 100%;
+}
+
+/* Override de estilos de JSXGraph para que encaje con el tema */
+.jxgbox {
+  background: var(--bg-base) !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — tablet
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 200px; }
+
+  .logo-title { font-size: 17px; }
+
+  .tool-icon { font-size: 15px; }
+  .tool-name { font-size: 9px; }
+}
+
+@media (max-width: 540px) {
+  .geoweb-layout { flex-direction: column; }
+
+  .geoweb-sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
