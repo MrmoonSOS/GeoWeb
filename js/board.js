@@ -1,6 +1,6 @@
 // board.js — Motor geométrico con JSXGraph
 
-import { distancia, areaTriangulo, perimetroTriangulo, angulo, radioCirculo, areaCirculo, circunferenciaCirculo } from './calculations.js';
+import { distancia, areaTriangulo, perimetroTriangulo, angulo, radioCirculo, areaCirculo, circunferenciaCirculo } from './calculation.js';
 
 let board = null;
 let updateCallback = null;
