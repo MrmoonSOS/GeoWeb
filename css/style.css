@@ -290,3 +290,99 @@ html, body { height: 100%; }
     border-bottom: 1px solid var(--border);
   }
 }
+
+/* ══════════════════════════════════════════
+   BARRA DE ESTADO
+══════════════════════════════════════════ */
+.status-bar {
+  position: absolute;
+  bottom: 44px;
+  left: 0; right: 0;
+  height: 28px;
+  background: rgba(13, 15, 20, 0.92);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.status-coords {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
+#status-hint {
+  font-family: var(--font-mono);
+}
+
+/* ══════════════════════════════════════════
+   BARRA ALGEBRAICA
+══════════════════════════════════════════ */
+.algebra-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 44px;
+  background: var(--bg-sidebar);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  z-index: 10;
+}
+
+.algebra-prefix {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.algebra-input {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 10px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.algebra-input:focus {
+  border-color: var(--accent2);
+}
+
+.algebra-input::placeholder {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.algebra-btn {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.algebra-btn:hover {
+  background: var(--accent);
+  color: var(--bg-base);
+}

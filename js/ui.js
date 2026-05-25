@@ -47,6 +47,9 @@ const ALL_IDS = [
   'val-area', 'val-perimetro',
   'val-angulo-a', 'val-angulo-b', 'val-angulo-c',
   'val-radio', 'val-diametro', 'val-area-circulo', 'val-circunferencia',
+  'val-pendiente', 'val-ecuacion-recta',
+  'val-angulo',
+  'val-semieje-a', 'val-semieje-b', 'val-dist-focal', 'val-excentricidad',
 ];
 
 // ── Exportación requerida por app.js ──────────────────────
@@ -87,4 +90,63 @@ export function actualizarPanel(data) {
     setVal('val-area-circulo',   data.circulo.area.toFixed(2)           + ' u²');
     setVal('val-circunferencia', data.circulo.circunferencia.toFixed(2) + ' u');
   }
+
+  if (data.recta) {
+    const pend = data.recta.pendiente;
+    setVal('val-pendiente', pend === null || pend === undefined
+      ? '∞'
+      : Number(pend).toFixed(3));
+    setVal('val-ecuacion-recta', data.recta.ecuacion);
+  }
+
+  if (data.angulo) {
+    setVal('val-angulo', data.angulo.valor.toFixed(1) + '°');
+  }
+
+  if (data.conica) {
+    const t = document.getElementById('titulo-conica');
+    if (t && data.conica.tipo) t.textContent = data.conica.tipo;
+    setVal('val-semieje-a',    Number(data.conica.a).toFixed(2));
+    setVal('val-semieje-b',    Number(data.conica.b).toFixed(2));
+    setVal('val-dist-focal',   Number(data.conica.c).toFixed(2));
+    setVal('val-excentricidad', Number(data.conica.e).toFixed(3));
+  }
 }
+
+// ── Barra de estado ──────────────────────────────────────
+export function setHint(texto) {
+  const el = document.getElementById('status-hint');
+  if (el) el.textContent = texto;
+}
+
+export function setCoordsDisplay(x, y) {
+  const el = document.getElementById('status-coords');
+  if (!el) return;
+  if (x === null || y === null || x === undefined || y === undefined) {
+    el.textContent = '';
+    return;
+  }
+  el.textContent = `(${x.toFixed(2)}, ${y.toFixed(2)})`;
+}
+
+export const HINTS = {
+  punto:           'Haz click en el tablero para crear un punto',
+  segmento:        '1er click: punto A — 2do click: punto B',
+  recta:           '1er click: punto A — 2do click: punto B (recta infinita)',
+  rayo:            '1er click: origen — 2do click: dirección',
+  triangulo:       'Haz click en 3 puntos para formar el triángulo',
+  poligono:        'Clicks sucesivos para los vértices — doble click para cerrar',
+  circulo:         '1er click: centro — 2do click: punto en el borde',
+  elipse:          '1er click: foco F1 — 2do click: foco F2 — 3er click: punto en la elipse',
+  hiperbola:       '1er click: foco F1 — 2do click: foco F2 — 3er click: punto en la hipérbola',
+  parabola:        '1er click: foco — 2do click: punto en la directriz',
+  mediatriz:       '1er click: punto A — 2do click: punto B',
+  bisectriz:       '1er click: punto A — 2do click: vértice — 3er click: punto B',
+  perpendicular:   '1er click: punto base — 2do click: punto en la recta de referencia',
+  puntomedio:      '1er click: punto A — 2do click: punto B',
+  interseccion:    'Haz click cerca de la intersección de dos objetos',
+  angulo:          '1er click: punto A — 2do click: vértice — 3er click: punto B',
+  distancia_label: '1er click: punto A — 2do click: punto B',
+  mover:           'Arrastra puntos para moverlos',
+  default:         'Selecciona una herramienta para comenzar',
+};

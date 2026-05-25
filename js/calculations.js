@@ -48,6 +48,29 @@ export function perimetroTriangulo(pA, pB, pC) {
   return distancia(pA, pB) + distancia(pB, pC) + distancia(pC, pA);
 }
 
+export function areaPoligono(puntos) {
+  // Shoelace generalizado para polígono simple cerrado
+  const n = puntos.length;
+  if (n < 3) return 0;
+  let s = 0;
+  for (let i = 0; i < n; i++) {
+    const a = puntos[i];
+    const b = puntos[(i + 1) % n];
+    s += a.x * b.y - b.x * a.y;
+  }
+  return Math.abs(s) / 2;
+}
+
+export function perimetroPoligono(puntos) {
+  const n = puntos.length;
+  if (n < 2) return 0;
+  let p = 0;
+  for (let i = 0; i < n; i++) {
+    p += distancia(puntos[i], puntos[(i + 1) % n]);
+  }
+  return p;
+}
+
 export function datosCirculo(centro, puntoEnBorde) {
   const radio = distancia(centro, puntoEnBorde);
   const diametro = 2 * radio;

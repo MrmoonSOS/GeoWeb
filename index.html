@@ -31,9 +31,9 @@
         <h1 class="logo-title">Geo<span class="logo-accent">Web</span></h1>
       </div>
 
-      <!-- Herramientas -->
+      <!-- Herramientas: Básico -->
       <section class="sidebar-section">
-        <p class="section-label">Herramienta</p>
+        <p class="section-label">Básico</p>
         <div class="toolbar-grid">
           <button class="tool-btn" data-herramienta="punto">
             <span class="tool-icon">·</span>
@@ -43,13 +43,104 @@
             <span class="tool-icon">╱</span>
             <span class="tool-name">Segmento</span>
           </button>
+          <button class="tool-btn" data-herramienta="recta">
+            <span class="tool-icon">↔</span>
+            <span class="tool-name">Recta</span>
+          </button>
+          <button class="tool-btn" data-herramienta="rayo">
+            <span class="tool-icon">→</span>
+            <span class="tool-name">Rayo</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Herramientas: Polígonos -->
+      <section class="sidebar-section">
+        <p class="section-label">Polígonos</p>
+        <div class="toolbar-grid">
           <button class="tool-btn" data-herramienta="triangulo">
             <span class="tool-icon">△</span>
             <span class="tool-name">Triángulo</span>
           </button>
+          <button class="tool-btn" data-herramienta="poligono">
+            <span class="tool-icon">⬡</span>
+            <span class="tool-name">Polígono</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Herramientas: Curvas -->
+      <section class="sidebar-section">
+        <p class="section-label">Curvas</p>
+        <div class="toolbar-grid">
           <button class="tool-btn" data-herramienta="circulo">
             <span class="tool-icon">○</span>
             <span class="tool-name">Círculo</span>
+          </button>
+          <button class="tool-btn" data-herramienta="elipse">
+            <span class="tool-icon">⬭</span>
+            <span class="tool-name">Elipse</span>
+          </button>
+          <button class="tool-btn" data-herramienta="hiperbola">
+            <span class="tool-icon">⌒</span>
+            <span class="tool-name">Hipérbola</span>
+          </button>
+          <button class="tool-btn" data-herramienta="parabola">
+            <span class="tool-icon">⌣</span>
+            <span class="tool-name">Parábola</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Herramientas: Construcciones -->
+      <section class="sidebar-section">
+        <p class="section-label">Construcciones</p>
+        <div class="toolbar-grid">
+          <button class="tool-btn" data-herramienta="mediatriz">
+            <span class="tool-icon">⊥</span>
+            <span class="tool-name">Mediatriz</span>
+          </button>
+          <button class="tool-btn" data-herramienta="bisectriz">
+            <span class="tool-icon">∠</span>
+            <span class="tool-name">Bisectriz</span>
+          </button>
+          <button class="tool-btn" data-herramienta="perpendicular">
+            <span class="tool-icon">⊢</span>
+            <span class="tool-name">Perpendicular</span>
+          </button>
+          <button class="tool-btn" data-herramienta="puntomedio">
+            <span class="tool-icon">·̈</span>
+            <span class="tool-name">Pto. Medio</span>
+          </button>
+          <button class="tool-btn" data-herramienta="interseccion">
+            <span class="tool-icon">✕</span>
+            <span class="tool-name">Intersección</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Herramientas: Medición -->
+      <section class="sidebar-section">
+        <p class="section-label">Medición</p>
+        <div class="toolbar-grid">
+          <button class="tool-btn" data-herramienta="angulo">
+            <span class="tool-icon">∡</span>
+            <span class="tool-name">Ángulo</span>
+          </button>
+          <button class="tool-btn" data-herramienta="distancia_label">
+            <span class="tool-icon">⟷</span>
+            <span class="tool-name">Distancia</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Herramientas: Edición -->
+      <section class="sidebar-section">
+        <p class="section-label">Edición</p>
+        <div class="toolbar-grid">
+          <button class="tool-btn" data-herramienta="mover">
+            <span class="tool-icon">✥</span>
+            <span class="tool-name">Mover</span>
           </button>
         </div>
       </section>
@@ -115,6 +206,49 @@
             <span class="prop-val" id="val-circunferencia">—</span>
           </div>
         </div>
+
+        <!-- Recta -->
+        <div class="prop-group" id="grupo-recta">
+          <p class="prop-group-title">Recta</p>
+          <div class="prop-row">
+            <span class="prop-key">Pendiente</span>
+            <span class="prop-val" id="val-pendiente">—</span>
+          </div>
+          <div class="prop-row">
+            <span class="prop-key">Ecuación</span>
+            <span class="prop-val" id="val-ecuacion-recta">—</span>
+          </div>
+        </div>
+
+        <!-- Ángulo -->
+        <div class="prop-group" id="grupo-angulo">
+          <p class="prop-group-title">Ángulo</p>
+          <div class="prop-row">
+            <span class="prop-key">Valor</span>
+            <span class="prop-val" id="val-angulo">—</span>
+          </div>
+        </div>
+
+        <!-- Cónica -->
+        <div class="prop-group" id="grupo-conica">
+          <p class="prop-group-title" id="titulo-conica">Cónica</p>
+          <div class="prop-row">
+            <span class="prop-key">Semieje a</span>
+            <span class="prop-val" id="val-semieje-a">—</span>
+          </div>
+          <div class="prop-row">
+            <span class="prop-key">Semieje b</span>
+            <span class="prop-val" id="val-semieje-b">—</span>
+          </div>
+          <div class="prop-row">
+            <span class="prop-key">Dist. focal</span>
+            <span class="prop-val" id="val-dist-focal">—</span>
+          </div>
+          <div class="prop-row">
+            <span class="prop-key">Excentricidad</span>
+            <span class="prop-val" id="val-excentricidad">—</span>
+          </div>
+        </div>
       </section>
 
       <!-- Divisor -->
@@ -132,6 +266,21 @@
     <!-- ── TABLERO ── -->
     <main class="geoweb-main">
       <div id="box" class="geoweb-board"></div>
+
+      <!-- Barra de estado -->
+      <div id="status-bar" class="status-bar">
+        <span id="status-hint">Selecciona una herramienta para comenzar</span>
+        <span id="status-coords" class="status-coords"></span>
+      </div>
+
+      <!-- Barra de entrada algebraica -->
+      <div class="algebra-bar">
+        <span class="algebra-prefix">f(x) =</span>
+        <input type="text" id="algebra-input" class="algebra-input"
+               placeholder="Ej: 2*x^2 - 3*x + 1  |  Circle((0,0), 5)  |  A = (3, 2)"
+               autocomplete="off" spellcheck="false" />
+        <button id="algebra-submit" class="algebra-btn">↵</button>
+      </div>
     </main>
 
   </div>
