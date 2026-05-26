@@ -25,22 +25,29 @@ function snapshotIdsCreados(b, antes) {
   return Object.keys(b.objects).filter(id => !antes.has(id));
 }
 
-function setupHistorial(b) {
-  let antes = new Set(Object.keys(b.objects));
+let historialAntes = new Set();
+let historialHandler = null;
 
-  document.addEventListener('geoweb:objeto-creado', () => {
+function setupHistorial() {
+  // Si ya estaba registrado, remover el listener anterior
+  if (historialHandler) {
+    document.removeEventListener('geoweb:objeto-creado', historialHandler);
+  }
+  historialAntes = new Set(Object.keys(boardMod.board.objects));
+
+  historialHandler = () => {
     const board = boardMod.board;
     if (!board) return;
-    const nuevos = snapshotIdsCreados(board, antes);
+    const nuevos = snapshotIdsCreados(board, historialAntes);
     if (nuevos.length > 0) {
       historial.push(nuevos);
-      redoStack.length = 0; // limpiar rehacer al crear algo nuevo
+      redoStack.length = 0;
       guardarLocal();
     }
-    antes = new Set(Object.keys(board.objects));
-  });
+    historialAntes = new Set(Object.keys(board.objects));
+  };
 
-  return () => { antes = new Set(Object.keys(b.objects)); };
+  document.addEventListener('geoweb:objeto-creado', historialHandler);
 }
 
 function deshacer() {
@@ -105,7 +112,7 @@ function exportarPNG() {
 // ── Inicialización ───────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initBoard();
-  setupHistorial(boardMod.board);
+  setupHistorial();
 
   // Botones de herramienta
   document.querySelectorAll('[data-herramienta]').forEach(btn => {
@@ -121,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnLimpiar.addEventListener('click', () => {
       desactivarTodo();
       clearBoard();
-      setupHistorial(boardMod.board);
       historial.length = 0;
+      setupHistorial();
       redoStack.length = 0;
       actualizarPanel(null);
       setHint('Tablero limpio');
@@ -148,15 +155,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Barra algebraica (placeholder — parser pendiente)
+  // Barra algebraica: grafica f(x) = expr
   const algebraInput = document.getElementById('algebra-input');
   const algebraSubmit = document.getElementById('algebra-submit');
   const procesarAlgebra = () => {
     if (!algebraInput) return;
     const expr = algebraInput.value.trim();
     if (!expr) return;
-    setHint(`Entrada algebraica recibida: "${expr}" (parser próximamente)`);
-    algebraInput.value = '';
+    const b = boardMod.board;
+    if (!b) return;
+
+    const matchFn = expr.match(/^(?:[a-zA-Z]\(x\)\s*=\s*)?(.+)$/);
+    if (!matchFn) {
+      setHint('Formato: f(x) = 2*x^2 - 1  o  sin(x) + cos(x)');
+      return;
+    }
+    const exprStr = matchFn[1].trim();
+
+    try {
+      const jsExpr = exprStr
+        .replace(/\^/g, '**')
+        .replace(/\bsin\b/g, 'Math.sin')
+        .replace(/\bcos\b/g, 'Math.cos')
+        .replace(/\btan\b/g, 'Math.tan')
+        .replace(/\bsqrt\b/g, 'Math.sqrt')
+        .replace(/\babs\b/g, 'Math.abs')
+        .replace(/\bln\b/g, 'Math.log')
+        .replace(/\blog\b/g, 'Math.log10')
+        .replace(/\bpi\b/g, 'Math.PI')
+        .replace(/\be\b/g, 'Math.E');
+
+      const fn = new Function('x', `return ${jsExpr};`);
+      const test = fn(0);
+      if (typeof test !== 'number') throw new Error('resultado no numérico');
+
+      b.create('functiongraph', [fn], {
+        strokeColor: '#ff9f43',
+        strokeWidth: 2,
+      });
+
+      document.dispatchEvent(new CustomEvent('geoweb:objeto-creado', { detail: { tipo: 'funcion', expr: exprStr } }));
+      setHint(`Graficado: ${exprStr}`);
+      algebraInput.value = '';
+    } catch (err) {
+      setHint(`Error en la expresión: "${exprStr}" — revisa la sintaxis`);
+    }
   };
   if (algebraSubmit) algebraSubmit.addEventListener('click', procesarAlgebra);
   if (algebraInput) {
